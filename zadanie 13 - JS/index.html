@@ -10,8 +10,6 @@
 
         <button id="send" onclick="send()">Wyślij</button>
 
-        <hr>
-
     <form>
             
     <label for="price">Cena: </label>
@@ -20,20 +18,20 @@
     <label for="amount">Ilość: </label>
     <input type="number" id="amount" name="amount"><br>
 
-    <!-- <button type="button" id="calculate" onclick="">Oblicz</button>
+    <button type="button" id="calculate" onclick="licz()">Oblicz</button>
     
-    <p id="result"></p> -->
+    <p id="result"></p>
 
-    <label for="lenght">Długość: </label>
-    <input type="number" id="lenght" name="lenght"><br>
+    <label for="dlugosc">Długość: </label>
+    <input type="number" id="dlugosc" name="dlugosc"><br>
 
-    <label for="width">Szerokość: </label>
-    <input type="number" id="width" name="width"><br>
+    <label for="szerokosc">Szerokość: </label>
+    <input type="number" id="szerokosc" name="szerokosc"><br>
 
     <label for="plytka">Płytka: </label>
     <input type="number" id="plytka" name="plytka"><br>
 
-    <button onclick="oblicz()">Oblicz</button>
+    <button type="button" onclick="oblicz()">Oblicz</button>
 
     <p id="wynik"></p>
 
@@ -41,26 +39,26 @@
 
     <script> 
 
-        // text content
-        // getelemendbyid 
-        // onclik albo addeventListener
-
         function send(){ 
         document.getElementById("hello").textContent = "Udało ci się!"
         }
 
-        // function licz(){
-        //     document.getElementById("result").textContent = 
-        //     console.log("Cena to:", result);
-        // }
+        function licz(){
+            let price = parseFloat(document.getElementById("price").value)
+            let amount = parseFloat(document.getElementById("amount").value)
+            let result = price * amount
+            document.getElementById("result").textContent = "Wynik: " + result
+        }
 
         function oblicz(){
             let dlugosc = parseFloat(document.getElementById("dlugosc").value)
+            let szerokosc = parseFloat(document.getElementById("szerokosc").value)
+            let plytka = parseFloat(document.getElementById("plytka").value)
+            let wynik = (dlugosc * szerokosc) / plytka
+            document.getElementById("wynik").textContent = "Wynik: " + wynik
+            return false
+
         }
-
-        
-
-
 
     </script>
 
