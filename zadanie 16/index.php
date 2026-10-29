@@ -1,21 +1,21 @@
 <?php 
 
 session_start();
-if(!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
+if(!isset($_SESSION['koszyk'])) {
+    $_SESSION['koszyk'] = [];
 }
 
 ?>
 
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
-        <form method="POST">
+        <form method="POST" action="">
             
     <!-- <label for="name">Imię: </label>
     <input type="text" id="name" name="name"><br> -->
@@ -45,44 +45,51 @@ if(!isset($_SESSION['cart'])) {
     <label for="amount">Liczba sztuk: </label>
     <input type="number" id="amount" name="amount"><br>
 
-    <input type="submit" value="Dodaj produkt do koszyka">
+    <input type="submit" value="Dodaj produkt do koszyka"><br>
 
 </form>
 
-    <h2>Koszyk</h2>
-    <table border="1">
-        <tr>
-            <th>Nazwa produktu</th>
-            <th>Cena produktu</th>
-            <th>Liczba sztuk</th>
-            <th>Wartość koszyka</th>
-        </tr>
+    <form method="POST" action="">
+        <input type="submit" value="clean"><br>
+</form>
 
     <?php
-    $total = 0;
 
-    foreach($_SESSION['cart'] as $product) {
-
-        $value = $product['price'] * $product['amount'];
-        $total += $value;
-
-        echo "<tr>";
-        echo "<td>";
-
-        $product['name'] . "</td>";
-        echo "<td>";
-        $product['price'] . "zł </td>";
-        echo "<td>";
-        $product['amount'] . "</td>";
-        echo "<td>";
-        $value . "zł </td>";
-        echo "<tr>";
-
+    if(isset($_POST['clean'])){
+        session_unset();
+        echo "Wyczyszczony koszyk!";
     }
 
-    ?>
-    <table>
+    // utworzenie tablicy z informacjami z formularza
+    // przepisanie ich z post do nowej tablicy asocjacyjnej
+    if(isset($_POST["name"])){
 
+    $new_product = [
+        'name' => $_POST['name'],
+        'price' => $_POST['price'],
+        'amount' => $_POST['amount']
+  ];
+
+    // przypisanie zmiennej do kszyka
+    $_SESSION['cart'][] = $new_product;
+    // var_dump($_SESSION['cart']);
+
+    // printowanie tabeli
+    echo "<table border=1>";
+    echo "<tr><th>Nazwa</th><th>Cena</th><th>Ilość</th><th>Suma</th></tr>";
+    foreach($_SESSION['cart'] as $product) {
+        echo "<tr>";
+        echo "<td>".$product['name']."</td>";
+        echo "<td>".$product['price']."</td>";
+        echo "<td>".$product['amount']."</td>";
+        echo "<td>".((int)$product['amount']*(int)$product['price'])."</td>";
+        echo "</tr>";
+
+    }
+    echo "</table>";
+
+    }
+    ?>
 </body>
 </html>
 <?php 
@@ -101,21 +108,4 @@ if(!isset($_SESSION['cart'])) {
 
     // }
 
-
-    if(!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = [];
-    }
- 
-    if(isset($_POST['add'])) {
-    $nazwaproduktu2 = $_POST['name'];
-    $cena2 = $_POST['price'];
-    $sztuki2 = $_POST['amount'];
-
-    $_SESSION['cart'][] = [
-        'name' => $nazwaproduktu2,
-        'price' => $cena2,
-        'amount' => $sztuki2
-    ];
-
-    }
 ?>
