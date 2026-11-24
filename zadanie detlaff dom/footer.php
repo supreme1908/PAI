@@ -1,2 +1,3 @@
-<!-- zamknięcie dokumentu html -->
- </html> 
+</main>
+</body>
+</html>

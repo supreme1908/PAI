@@ -1,27 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+<?php
+require 'nav.php';
+require 'db_connect.php';
+?>
 
-<form method="POST" action="">
+<h1>Dodaj grę</h1>
 
-    <label for="title">Tytuł</label>
-    <input type="text" id="title" name="title"><br>
+<form method="post" action="<?= htmlspecialchars(basename($_SERVER['PHP_SELF'])) ?>">
+    <label>Tytuł:
+        <input type="text" name="tytul" maxlength="100" required>
+    </label>
 
-    <label for="species">Gatunek</label>
-    <input type="text" id="species" name="species"><br>
+    <label>Gatunek:
+        <input type="text" name="gatunek" maxlength="50" required>
+    </label>
 
-    <label for="title">Platforma</label>
-    <input type="text" id="platform" name="platform"><br>
+    <label>Platforma:
+        <input type="text" name="platforma" maxlength="50" required>
+    </label>
 
-    <input type="submit" value="Dodaj nową gre"><br>
+    <label>Rok wydania:
+        <input type="number" name="rok_wydania" min="1901" max="2155" required>
+    </label>
 
+    <label>Ocena:
+        <input type="number" name="ocena" min="0" max="10" step="0.1" required>
+    </label>
+
+    <button type="submit">Dodaj grę</button>
 </form>
 
-    
-</body>
-</html>
+<?php
+if (isset($_POST['tytul'])) {
+    $tytul = mysqli_real_escape_string($conn, $_POST['tytul']);
+    $gatunek = mysqli_real_escape_string($conn, $_POST['gatunek']);
+    $platforma = mysqli_real_escape_string($conn, $_POST['platforma']);
+    $rok = (int) $_POST['rok_wydania'];
+    $ocena = (float) $_POST['ocena'];
+
+    $sql = "INSERT INTO gry (tytul, gatunek, platforma, rok_wydania, ocena)
+            VALUES ('$tytul', '$gatunek', '$platforma', $rok, $ocena)";
+
+    if (mysqli_query($conn, $sql)) {
+        echo "<p>Dodano grę.</p>";
+    } else {
+        echo "<p>Nie udało się dodać gry.</p>";
+    }
+}
+
+require 'footer.php';
+?>
