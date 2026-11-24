@@ -1,0 +1,58 @@
+#zewnatrz {
+  display: grid;
+  height: 200px;
+  grid-template-columns: 25% 50% 25%;
+    grid-template-areas:
+    'header header header'
+    'nav section aside'
+    'footer footer footer';
+}
+#section {
+  display: grid;
+  height: 200px;
+  grid-template-columns: 25% 25% 25%;
+    grid-template-areas:
+    'header2'
+    'article'
+    'footer2';
+}
+
+header {
+  background-color: red;
+  grid-area: head;
+}
+
+#header2 {
+  background-color: grey;
+  grid-area: header2;
+}
+
+#footer2 {
+  background-color: grey;
+  grid-area: footer2;
+}
+
+article {
+    background-color: grey;
+    grid-area: article
+}
+
+section {
+    background-color: grey;
+    grid-area: section
+}
+
+nav {
+  background-color: blue;
+  grid-area: nav;
+}
+
+aside {
+  background-color: green;
+  grid-area: aside;
+}
+
+footer {
+  background-color: orange;
+  grid-area: foot;
+}
